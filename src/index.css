@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+/* Inter, static weights 400 + 700 only. latin + latin-ext (latin-ext carries ₹). */
+@import "@fontsource/inter/latin-400.css";
+@import "@fontsource/inter/latin-ext-400.css";
+@import "@fontsource/inter/latin-700.css";
+@import "@fontsource/inter/latin-ext-700.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: 'Inter', sans-serif;
+    /* Only 400 and 700 are loaded. Pin every weight utility to one of them so a
+       class like font-medium (e.g. from a newly added shadcn component) never
+       makes the browser fake an in-between weight. Use font-normal / font-bold. */
+    --font-weight-thin: 400;
+    --font-weight-extralight: 400;
+    --font-weight-light: 400;
+    --font-weight-normal: 400;
+    --font-weight-medium: 400;
+    --font-weight-semibold: 700;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 700;
+    --font-weight-black: 700;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/*
+ * Brand palette — the black & lime look from the 2026 OE deck.
+ * NOTE: --brand-lime was matched by eye from rendered slides, not read from the
+ * deck file. Close, but not the official value — swap it here when known.
+ * Everything else below is derived from these four (plus shadcn's red for
+ * destructive actions, which the palette has no equivalent for).
+ */
+:root {
+    --brand-black: #000000;
+    --brand-white: #ffffff;
+    --brand-grey: #f4f4f4;
+    --brand-lime: #a8e63d;
+
+    /* Light: white canvas, light-grey panels, black primary, lime highlights */
+    --background: var(--brand-white);
+    --foreground: var(--brand-black);
+    --card: var(--brand-white);
+    --card-foreground: var(--brand-black);
+    --popover: var(--brand-white);
+    --popover-foreground: var(--brand-black);
+    --primary: var(--brand-black);
+    --primary-foreground: var(--brand-white);
+    --secondary: var(--brand-grey);
+    --secondary-foreground: var(--brand-black);
+    --muted: var(--brand-grey);
+    --muted-foreground: oklch(0 0 0 / 60%);
+    --accent: var(--brand-grey);
+    --accent-foreground: var(--brand-black);
+    --destructive: oklch(0.577 0.245 27.325);
+    --border: oklch(0 0 0 / 10%);
+    --input: oklch(0 0 0 / 15%);
+    /* lime on white is too faint for a focus ring — black stays visible */
+    --ring: var(--brand-black);
+    --chart-1: var(--brand-lime);
+    --chart-2: var(--brand-black);
+    --chart-3: oklch(0.556 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.87 0 0);
+    --radius: 0.625rem;
+    --sidebar: var(--brand-grey);
+    --sidebar-foreground: var(--brand-black);
+    --sidebar-primary: var(--brand-lime);
+    --sidebar-primary-foreground: var(--brand-black);
+    --sidebar-accent: oklch(0 0 0 / 6%);
+    --sidebar-accent-foreground: var(--brand-black);
+    --sidebar-border: oklch(0 0 0 / 10%);
+    --sidebar-ring: var(--brand-black);
+}
+
+.dark {
+    /* Dark (default): the deck look — black canvas, white type, lime primary */
+    --background: var(--brand-black);
+    --foreground: var(--brand-white);
+    --card: var(--brand-black);
+    --card-foreground: var(--brand-white);
+    --popover: var(--brand-black);
+    --popover-foreground: var(--brand-white);
+    --primary: var(--brand-lime);
+    --primary-foreground: var(--brand-black);
+    --secondary: oklch(1 0 0 / 10%);
+    --secondary-foreground: var(--brand-white);
+    --muted: oklch(1 0 0 / 10%);
+    --muted-foreground: oklch(1 0 0 / 60%);
+    --accent: oklch(1 0 0 / 10%);
+    --accent-foreground: var(--brand-white);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 15%);
+    --input: oklch(1 0 0 / 20%);
+    --ring: var(--brand-lime);
+    --chart-1: var(--brand-lime);
+    --chart-2: var(--brand-white);
+    --chart-3: oklch(0.708 0 0);
+    --chart-4: oklch(0.556 0 0);
+    --chart-5: oklch(0.371 0 0);
+    --sidebar: var(--brand-black);
+    --sidebar-foreground: var(--brand-white);
+    --sidebar-primary: var(--brand-lime);
+    --sidebar-primary-foreground: var(--brand-black);
+    --sidebar-accent: oklch(1 0 0 / 10%);
+    --sidebar-accent-foreground: var(--brand-white);
+    --sidebar-border: oklch(1 0 0 / 15%);
+    --sidebar-ring: var(--brand-lime);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+  html {
+    @apply font-sans;
+    }
+}
