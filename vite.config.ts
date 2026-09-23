@@ -13,7 +13,12 @@ export default defineConfig({
   },
   // Pinned so it never collides with other local Vite apps (5173).
   server: { port: 5180, strictPort: true },
-  preview: { port: 6024, strictPort: true }, // production serve port
+  preview: {
+    port: 6024, // production serve port
+    strictPort: true,
+    // Vite blocks unknown Host headers; production is served behind this domain.
+    allowedHosts: ["finance.thefirstimpression.ai"],
+  },
   build: {
     rolldownOptions: {
       output: {
