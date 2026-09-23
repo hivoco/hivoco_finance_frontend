@@ -1,7 +1,7 @@
 import { Navigate } from "react-router"
 
 import { Skeleton } from "@/components/ui/skeleton"
-import { useCurrentUser } from "@/hooks/use-current-user"
+import { useCanViewAll, useCurrentUser } from "@/hooks/use-current-user"
 import { DashboardPage } from "@/pages/dashboard"
 
 /**
@@ -10,7 +10,8 @@ import { DashboardPage } from "@/pages/dashboard"
  * /reports/cashflow), so project users go straight to their projects.
  */
 export function HomePage() {
-  const { data: user, isLoading } = useCurrentUser()
+  const { isLoading } = useCurrentUser()
+  const canViewAll = useCanViewAll()
 
   if (isLoading) {
     return (
@@ -20,6 +21,6 @@ export function HomePage() {
       </div>
     )
   }
-  if (user?.role !== "super_admin" && user?.role !== "admin") return <Navigate to="/projects" replace />
+  if (!canViewAll) return <Navigate to="/projects" replace />
   return <DashboardPage />
 }
