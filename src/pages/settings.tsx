@@ -9,8 +9,12 @@ import { FormDialog } from "@/components/form-dialog"
 import { SelectField, TextField, type Option } from "@/components/form-fields"
 import { PageHeader } from "@/components/page-header"
 import { Button } from "@/components/ui/button"
+import { Badge } from "@/components/ui/badge"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Spinner } from "@/components/ui/spinner"
 import { useIsSuperAdmin } from "@/hooks/use-current-user"
-import { $api } from "@/lib/api/client"
+import { useHealth } from "@/hooks/use-health"
+import { $api, API_BASE_URL } from "@/lib/api/client"
 import type { components } from "@/lib/api/schema"
 import { formatDateTime, humanize } from "@/lib/format"
 
@@ -34,6 +38,7 @@ const NUMERIC = new Set([
 
 export function SettingsPage() {
   const isSuperAdmin = useIsSuperAdmin()
+  const health = useHealth()
   const settings = $api.useQuery("get", "/settings")
   const [editing, setEditing] = React.useState<Setting | null>(null)
 
@@ -75,6 +80,30 @@ export function SettingsPage() {
         title="Settings"
         description={isSuperAdmin ? "Live configuration — changes are validated and audit-logged." : "Live configuration (read-only)."}
       />
+      <div className="px-4 lg:px-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Service status</CardTitle>
+            <CardDescription className="break-all">{API_BASE_URL}</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap items-center gap-2">
+            {health.isLoading ? (
+              <Spinner />
+            ) : (
+              <>
+                <Badge variant={health.apiReachable ? "default" : "destructive"}>
+                  API {health.apiReachable ? "reachable" : "unreachable"}
+                </Badge>
+                <Badge variant={health.dbConnected ? "default" : "destructive"}>
+                  Database {health.dbConnected ? "connected" : "unavailable"}
+                </Badge>
+                {health.detail && <span className="text-sm text-muted-foreground">{health.detail}</span>}
+              </>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
       <DataTable columns={columns} data={settings.data} isLoading={settings.isLoading} error={settings.error} emptyMessage="No settings." />
       {editing && <SettingDialog setting={editing} onClose={() => setEditing(null)} />}
     </>
