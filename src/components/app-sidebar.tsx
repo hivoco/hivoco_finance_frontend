@@ -1,5 +1,4 @@
 import * as React from "react"
-import { LandmarkIcon } from "lucide-react"
 import { Link } from "react-router"
 
 import { NavMain } from "@/components/nav-main"
@@ -28,9 +27,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link to="/">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                  <LandmarkIcon className="size-4" />
-                </div>
+                <img src="/hivoco-mark.png" alt="" className="size-8 shrink-0" />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-bold">HiVoco</span>
                   <span className="truncate text-xs">Finance</span>
