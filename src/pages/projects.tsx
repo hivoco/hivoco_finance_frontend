@@ -6,6 +6,7 @@ import { useNavigate } from "react-router"
 import { useDebounce } from "use-debounce"
 import { z } from "zod"
 
+import { CopyValue } from "@/components/copy-value"
 import { DataTable, useOffsetPagination, type Columns } from "@/components/data-table"
 import { FormDialog } from "@/components/form-dialog"
 import {
@@ -58,6 +59,12 @@ export function ProjectsPage() {
   })
 
   const columns: Columns<Project> = [
+    {
+      header: "ID",
+      cell: ({ row }) => (
+        <CopyValue value={row.original.id} label="Project ID" className="text-muted-foreground" />
+      ),
+    },
     {
       header: "Project",
       cell: ({ row }) => (
@@ -235,8 +242,8 @@ export function ProjectFormDialog({
         placeholder="Select BU"
         description={
           isEdit
-            ? `Project code ${project.project_code ?? "—"} (auto-generated)`
-            : "The project code is generated automatically."
+            ? `Project ID ${project.id} · code ${project.project_code ?? "—"} (auto-generated)`
+            : "The project ID and code are generated automatically."
         }
       />
       <div className="grid gap-4 sm:grid-cols-2">

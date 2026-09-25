@@ -3,6 +3,7 @@ import { PencilIcon } from "lucide-react"
 import { Link, useNavigate, useParams } from "react-router"
 
 import { DataTable, type Columns } from "@/components/data-table"
+import { CopyValue } from "@/components/copy-value"
 import { DetailCard } from "@/components/detail-list"
 import { PageHeader } from "@/components/page-header"
 import { QueryState } from "@/components/query-state"
@@ -113,6 +114,7 @@ export function ProjectDetailPage() {
         <DetailCard
           title="Details"
           items={[
+            { label: "Project ID", value: <CopyValue value={p.id} label="Project ID" /> },
             { label: "Project code", value: p.project_code ?? "—" },
             { label: "Client", value: clientName(p.client_id) },
             { label: "Initiation date", value: formatDate(p.initiation_date) },
