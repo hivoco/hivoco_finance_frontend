@@ -1,6 +1,6 @@
 import * as React from "react"
 import { parseISO } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, EyeIcon, EyeOffIcon } from "lucide-react"
 import {
   Controller,
   type Control,
@@ -30,6 +30,7 @@ import { Input } from "@/components/ui/input"
 import {
   InputGroup,
   InputGroupAddon,
+  InputGroupButton,
   InputGroupInput,
   InputGroupText,
 } from "@/components/ui/input-group"
@@ -132,6 +133,50 @@ export function TextareaField<T extends FieldValues>({ control, name, label, des
       render={({ field, fieldState }) => (
         <FieldShell id={name} label={label} description={description} error={fieldState.error}>
           <Textarea {...field} value={field.value ?? ""} id={name} disabled={disabled} aria-invalid={fieldState.invalid} />
+        </FieldShell>
+      )}
+    />
+  )
+}
+
+/** Password input with a show/hide toggle. */
+export function PasswordField<T extends FieldValues>({
+  control,
+  name,
+  label,
+  description,
+  disabled,
+  autoComplete = "new-password",
+}: BaseProps<T> & { autoComplete?: string }) {
+  const [visible, setVisible] = React.useState(false)
+  return (
+    <Controller
+      control={control}
+      name={name}
+      render={({ field, fieldState }) => (
+        <FieldShell id={name} label={label} description={description} error={fieldState.error}>
+          <InputGroup>
+            <InputGroupInput
+              {...field}
+              value={field.value ?? ""}
+              id={name}
+              type={visible ? "text" : "password"}
+              autoComplete={autoComplete}
+              disabled={disabled}
+              aria-invalid={fieldState.invalid}
+            />
+            <InputGroupAddon align="inline-end">
+              <InputGroupButton
+                size="icon-xs"
+                onClick={() => setVisible((v) => !v)}
+                aria-label={visible ? "Hide password" : "Show password"}
+                aria-pressed={visible}
+                disabled={disabled}
+              >
+                {visible ? <EyeOffIcon /> : <EyeIcon />}
+              </InputGroupButton>
+            </InputGroupAddon>
+          </InputGroup>
         </FieldShell>
       )}
     />

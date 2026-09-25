@@ -4,7 +4,7 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import { FormDialog } from "@/components/form-dialog"
-import { TextField } from "@/components/form-fields"
+import { PasswordField } from "@/components/form-fields"
 import { $api } from "@/lib/api/client"
 
 const schema = z
@@ -39,15 +39,14 @@ export function ChangePasswordDialog({ open, onOpenChange }: { open: boolean; on
         change.mutate({ body: { old_password, new_password } })
       )}
     >
-      <TextField
+      <PasswordField
         control={form.control}
         name="old_password"
         label="Current password"
-        type="password"
         autoComplete="current-password"
       />
-      <TextField control={form.control} name="new_password" label="New password" type="password" autoComplete="new-password" />
-      <TextField control={form.control} name="confirm" label="Confirm new password" type="password" autoComplete="new-password" />
+      <PasswordField control={form.control} name="new_password" label="New password" />
+      <PasswordField control={form.control} name="confirm" label="Confirm new password" />
     </FormDialog>
   )
 }

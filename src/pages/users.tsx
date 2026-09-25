@@ -6,7 +6,7 @@ import { z } from "zod"
 
 import { DataTable, type Columns } from "@/components/data-table"
 import { FormDialog } from "@/components/form-dialog"
-import { SelectField, SwitchField, TextField } from "@/components/form-fields"
+import { PasswordField, SelectField, SwitchField, TextField } from "@/components/form-fields"
 import { PageHeader } from "@/components/page-header"
 import { BoolBadge } from "@/components/status-badge"
 import { Badge } from "@/components/ui/badge"
@@ -105,13 +105,7 @@ function CreateUserDialog({ onClose }: { onClose: () => void }) {
       <TextField control={form.control} name="name" label="Name" />
       <TextField control={form.control} name="email" label="Email" type="email" autoComplete="off" />
       <SelectField control={form.control} name="role" label="Role" options={options(ROLES)} />
-      <TextField
-        control={form.control}
-        name="password"
-        label="Temporary password"
-        type="password"
-        autoComplete="new-password"
-      />
+      <PasswordField control={form.control} name="password" label="Temporary password" />
     </FormDialog>
   )
 }
@@ -169,12 +163,10 @@ function EditUserDialog({ userId, isSelf, onClose }: { userId: number; isSelf: b
         description={isSelf ? "You can't deactivate your own account." : "Deactivated users can't log in."}
         disabled={isSelf}
       />
-      <TextField
+      <PasswordField
         control={form.control}
         name="password"
         label="Reset password"
-        type="password"
-        autoComplete="new-password"
         description="Leave blank to keep the current password."
       />
     </FormDialog>
